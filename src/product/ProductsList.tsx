@@ -29,14 +29,21 @@ const log = getLogger('ProductsList');
 
 const ProductsList: React.FC<RouteComponentProps> = ({ history }) => {
     const { logout } = useContext(AuthContext);
-    const { products, fetching, fetchingError } = useContext(ProductContext);
+    const { products, fetching, fetchingError} = useContext(ProductContext);
     const [disableInfiniteScroll, setDisableInfiniteScroll] = useState<boolean>(false);
     const [displayed, setDisplayed] = useState<ProductProps[]>([]);
     const [position, setPosition] = useState(25);
 
+    console.log(products?.length);
+
     useEffect(() => {
-        if(products?.length)
+        if(products?.length) {
             setDisplayed(products?.slice(0, 25));
+        }
+        else
+        {
+            setDisplayed([]);
+        }
     }, [products]);
 
     log('render');

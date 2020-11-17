@@ -16,7 +16,7 @@ export interface ProductsState {
     fetchingError?: Error | null,
     saving: boolean,
     savingError?: Error | null,
-    saveProduct?: SaveProductFn,
+    saveProduct?: SaveProductFn
 }
 
 interface ActionProps {

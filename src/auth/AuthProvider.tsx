@@ -53,15 +53,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     log('logout');
     setState({
       ...state,
+      token: '',
       isAuthenticated: false,
       isAuthenticating: false,
       authenticationError: null,
-      pendingAuthentication: false,
-      token: ''
+      pendingAuthentication: false
     });
     (async () => {
-      // await Storage.remove({ key: 'token' });
-      await Storage.clear();
+      await Storage.remove({ key: 'token' });
+      //await Storage.clear();
     })();
   }
 
