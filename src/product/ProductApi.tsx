@@ -1,19 +1,102 @@
 import axios from 'axios';
 import { authConfig, baseUrl, getLogger, withLogs } from '../core';
 import { ProductProps } from './ProductProps';
+import {Plugins} from "@capacitor/core";
+
+const {Storage} = Plugins;
+const {Network} = Plugins;
 
 const productUrl = `http://${baseUrl}/api/product`;
 
-export const getProducts: (token: string) => Promise<ProductProps[]> = token => {
-    return withLogs(axios.get(productUrl, authConfig(token)), 'getProducts');
+export const getProducts: (token: string, connectionNetwork: boolean | undefined) => Promise<ProductProps[]> = (token, connectionNetwork) => {
+    return Network.getStatus()
+        .then(status => {
+            if (status.connected) {
+                var res = axios.get(productUrl, authConfig(token));
+                log("CONNECTION4: " + status.connected);
+                res.then(function (res) {
+                    (async () => {
+                        await Storage.set({
+                            key: 'products',
+                            value: JSON.stringify(res.data)
+                        });
+                    })()
+                })
+                return withLogs(res, 'getProducts');
+            }
+            log("getProducts from local Storage");
+            return Storage.get({key: 'products'});
+        })
 }
 
-export const createProduct: (token: string, product: ProductProps) => Promise<ProductProps[]> = (token, product) => {
-    return withLogs(axios.post(productUrl, product, authConfig(token)), 'createProduct');
+export const createProduct: (token: string, product: ProductProps, connectionNetwork: boolean | undefined) => Promise<ProductProps[]> = (token, product, connectionNetwork) => {
+    return Network.getStatus()
+        .then(status => {
+            if (status.connected) {
+                var res = axios.post(productUrl, product, authConfig(token));
+                res.then(async function (res) {
+                    await Storage.set({
+                        key: `new${product._id}`,
+                        value: JSON.stringify({
+                            id: product._id,
+                            description: product.description,
+                            price: product.price,
+                            size: product.size,
+                            availability: product.availability,
+                            date: product.date
+                        }),
+                    });
+                });
+                return withLogs(res, 'createProduct');
+            }
+            return Storage.set({
+                key: 'new',
+                value: JSON.stringify({
+                    id: product._id,
+                    description: product.description,
+                    price: product.price,
+                    size: product.size,
+                    availability: product.availability,
+                    date: product.date
+                }),
+            });
+        })
 }
 
-export const updateProduct: (token: string, product: ProductProps) => Promise<ProductProps[]> = (token, product) => {
-    return withLogs(axios.put(`${productUrl}/${product._id}`, product, authConfig(token)), 'updateProduct');
+export const updateProduct: (token: string, product: ProductProps, connectionNetwork: boolean | undefined) => Promise<ProductProps[]> = (token, product, connectionNetwork) => {
+    return Network.getStatus()
+        .then(status => {
+            if (status.connected) {
+                var res = axios.put(`${productUrl}/${product._id}`, product, authConfig(token));
+                log("AICIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
+                res.then(async function (res) {
+                    if (product._id)
+                        await Storage.set({
+                            key: product._id,
+                            value: JSON.stringify({
+                                id: product._id,
+                                description: product.description,
+                                price: product.price,
+                                size: product.size,
+                                availability: product.availability,
+                                date: product.date
+                            }),
+                        });
+                });
+                return withLogs(res, 'updateProduct');
+            }
+            return Storage.set({
+                key: 'user',
+                value: JSON.stringify({
+                    id: product._id,
+                    description: product.description,
+                    price: product.price,
+                    size: product.size,
+                    availability: product.availability,
+                    date: product.date
+                }),
+            });
+        });
 }
 
 interface MessageData {

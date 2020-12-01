@@ -1,10 +1,11 @@
-import React, { useCallback, useContext, useEffect, useReducer } from 'react';
+import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import { getLogger } from '../core';
 import { ProductProps } from './ProductProps';
 import { createProduct, getProducts, newWebSocket, updateProduct } from './ProductApi';
 import { AuthContext } from '../auth';
-import {Redirect} from "react-router-dom";
+import {useNetwork} from "../core/UseNetState";
+import {Network} from "@capacitor/core";
 
 const log = getLogger('ProductProvider');
 
@@ -74,10 +75,18 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
     const { token } = useContext(AuthContext);
     const [state, dispatch] = useReducer(reducer, initialState);
     const { products, fetching, fetchingError, saving, savingError } = state;
-    useEffect(getProductsEffect, [token]);
-    useEffect(wsEffect, [token]);
-    const saveProduct = useCallback<SaveProductFn>(saveProductCallback, [token]);
+    const { networkStatus } = useNetwork();
+    const [ offlineBehaviour, setOfflineBehaviour ] = useState<boolean>(false);
+
+    useEffect(getProductsEffect, [token, networkStatus.connected]);
+    useEffect(wsEffect, [token, networkStatus.connected]);
+    useEffect(networkEffect, [token]);
+
+    const connectionNetwork = networkStatus.connected;
+    const saveProduct = useCallback<SaveProductFn>(saveProductCallback, [token, networkStatus.connected, setOfflineBehaviour]);
     const value = { products, fetching, fetchingError, saving, savingError, saveProduct};
+
+
     log('returns');
     return (
         <ProductContext.Provider value={value}>
@@ -99,7 +108,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
             try {
                 log('fetchProducts started');
                 dispatch({ type: FETCH_PRODUCTS_STARTED });
-                const products = await getProducts(token);
+                const products = await getProducts(token, networkStatus.connected);
                 log('fetchProducts succeeded');
                 if (!canceled) {
                     dispatch({ type: FETCH_PRODUCTS_SUCCEEDED, payload: { products } });
@@ -115,7 +124,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
         try {
             log('saveProduct started');
             dispatch({ type: SAVE_PRODUCT_STARTED });
-            const savedProduct= await (product._id ? updateProduct(token, product) : createProduct(token, product));
+            const savedProduct= await (product._id ? updateProduct(token, product, connectionNetwork) : createProduct(token, product, connectionNetwork));
             log('saveProduct succeeded');
             dispatch({ type: SAVE_PRODUCT_SUCCEEDED, payload: { product: savedProduct } });
         } catch (error) {
@@ -145,5 +154,24 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
             canceled = true;
             closeWebSocket?.();
         }
+    }
+
+    function networkEffect() {
+        let canceled = false;
+        Network.addListener('networkStatusChange', async (status) => {
+            if (canceled) {
+                return;
+            }
+            const connected: boolean = status.connected;
+            if (connected) {
+                // const conflicts = await syncData(token);
+                // setConflictGuitars(conflicts);
+            }
+            //setConnectionNetwork(connected);
+            console.log("Network status changed", status);
+        });
+        return () => {
+            canceled = true;
+        };
     }
 };

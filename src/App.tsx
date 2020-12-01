@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-//import { ItemEdit, ItemList } from './todo';
 import { ProductEdit, ProductsList } from './product';
 
 /* Core CSS required for Ionic components to work properly */
@@ -23,11 +22,10 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import { ItemProvider } from './todo/ItemProvider';
 import { ProductProvider } from './product/ProductProvider';
 import { AuthProvider, Login, PrivateRoute, Logout } from './auth';
-import Tab1 from './pages/Tab1';
-import {home, shirt} from "ionicons/icons";
+import {search, home, filter} from "ionicons/icons";
+import ProductsSearch from "./pages/ProductsSearch";
 
 const App: React.FC = () => (
   <IonApp>
@@ -37,33 +35,23 @@ const App: React.FC = () => (
           <AuthProvider>
             <Route path="/login" component={Login} exact={true}/>
             <ProductProvider>
-              {/*
-              <PrivateRoute path="/items" component={ItemList} exact={true}/>
-              <PrivateRoute path="/item" component={ItemEdit} exact={true}/>
-              <PrivateRoute path="/item/:id" component={ItemEdit} exact={true}/>
-              <PrivateRoute path="/logout" component={Logout} exact={true}/>
-              */}
-              <PrivateRoute path="/tab1" component={Tab1} exact={true}/>
               <PrivateRoute path="/login" component={Login} exact={true}/>
               <PrivateRoute path="/products" component={ProductsList} exact={true}/>
               <PrivateRoute path="/product" component={ProductEdit} exact={true}/>
               <PrivateRoute path="/product/:id" component={ProductEdit} exact={true}/>
-
+              <PrivateRoute path="/search/products" component={ProductsSearch} exact={true}/>
             </ProductProvider>
-            {/*
-            <Route exact path="/" render={() => <Redirect to="/items"/>}/>
-            */}
             <Route exact path="/" render={() => <Redirect to="/products"/>}/>
           </AuthProvider>
         </IonRouterOutlet>
-          <IonTabBar slot="bottom">
-            <IonTabButton tab="tab1" href="/tab1">
-              <IonIcon icon={shirt} />
-              <IonLabel>Pics</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab2" href="/products">
+        <IonTabBar slot="bottom">
+          <IonTabButton tab="tab1" href="/products">
             <IonIcon icon={home} />
             <IonLabel>Home</IonLabel>
+          </IonTabButton>
+          <IonTabButton tab="tab2" href="/search/products">
+            <IonIcon icon={search} />
+            <IonLabel>Search products</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
