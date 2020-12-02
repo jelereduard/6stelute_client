@@ -2,13 +2,14 @@ import axios from 'axios';
 import { authConfig, baseUrl, getLogger, withLogs } from '../core';
 import { ProductProps } from './ProductProps';
 import {Plugins} from "@capacitor/core";
+import {LocalStorage} from "../core/storage";
 
 const {Storage} = Plugins;
 const {Network} = Plugins;
 
 const productUrl = `http://${baseUrl}/api/product`;
 
-export const getProducts: (token: string, connectionNetwork: boolean | undefined) => Promise<ProductProps[]> = (token, connectionNetwork) => {
+export const getProducts: (token: string) => Promise<ProductProps[]> = (token) => {
     return Network.getStatus()
         .then(status => {
             if (status.connected) {
@@ -29,7 +30,7 @@ export const getProducts: (token: string, connectionNetwork: boolean | undefined
         })
 }
 
-export const createProduct: (token: string, product: ProductProps, connectionNetwork: boolean | undefined) => Promise<ProductProps[]> = (token, product, connectionNetwork) => {
+export const createProduct: (token: string, product: ProductProps) => Promise<ProductProps[]> = (token, product) => {
     return Network.getStatus()
         .then(status => {
             if (status.connected) {
@@ -63,12 +64,11 @@ export const createProduct: (token: string, product: ProductProps, connectionNet
         })
 }
 
-export const updateProduct: (token: string, product: ProductProps, connectionNetwork: boolean | undefined) => Promise<ProductProps[]> = (token, product, connectionNetwork) => {
+export const updateProduct: (token: string, product: ProductProps) => Promise<ProductProps[]> = (token, product) => {
     return Network.getStatus()
         .then(status => {
             if (status.connected) {
                 var res = axios.put(`${productUrl}/${product._id}`, product, authConfig(token));
-                log("AICIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
                 res.then(async function (res) {
                     if (product._id)
                         await Storage.set({

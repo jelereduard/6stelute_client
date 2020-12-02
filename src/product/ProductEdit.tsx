@@ -8,12 +8,15 @@ import {
     IonLoading,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    IonItem,
+    IonLabel
 } from '@ionic/react';
 import { getLogger } from '../core';
 import { ProductContext } from './ProductProvider';
 import { RouteComponentProps } from 'react-router';
 import { ProductProps } from './ProductProps';
+import {useNetwork} from "../core/UseNetState";
 
 const log = getLogger('ProductEdit');
 
@@ -29,6 +32,7 @@ const ProductEdit: React.FC<ProductEditProps> = ({ history, match }) => {
     const [availability, setAvailability] = useState('');
     const [date, setDate]                 = useState('');
     const [product, setProduct]           = useState<ProductProps>();
+    const { networkStatus } = useNetwork();
     useEffect(() => {
         log('useEffect');
         const routeId = match.params.id || '';
@@ -42,12 +46,14 @@ const ProductEdit: React.FC<ProductEditProps> = ({ history, match }) => {
             setDate(product.date);
         }
     }, [match.params.id, products]);
+
     const handleSave = () => {
         const editedProduct = product ? { ...product, description, price, size, availability, date } : { description, price, size, availability, date };
-        console.log(editedProduct.date);
-        saveProduct && saveProduct(editedProduct).then(() => history.goBack());
+        saveProduct && saveProduct(editedProduct, networkStatus.connected).then(() => history.goBack());
     };
+
     log('render');
+
     return (
         <IonPage>
             <IonHeader>
@@ -61,11 +67,26 @@ const ProductEdit: React.FC<ProductEditProps> = ({ history, match }) => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonInput value={description} onIonChange={e => setDescription(e.detail.value || '')} />
-                <IonInput value={price} onIonChange={e => setPrice(e.detail.value || '')} />
-                <IonInput value={size} onIonChange={e => setSize(e.detail.value || '')} />
-                <IonInput value={availability} onIonChange={e => setAvailability(e.detail.value || '')} />
-                <IonInput value={date} onIonChange={e => setDate(e.detail.value || '')} />
+                <IonItem className="ion-text-wrap">
+                    <IonLabel className="labels">Description :</IonLabel>
+                    <IonInput value={description} onIonChange={e => setDescription(e.detail.value || '')} />
+                </IonItem>
+                <IonItem className="ion-text-wrap">
+                    <IonLabel className="labels">Price :</IonLabel>
+                    <IonInput value={price} onIonChange={e => setPrice(e.detail.value || '')} />
+                </IonItem>
+                <IonItem className="ion-text-wrap">
+                    <IonLabel className="labels">Size :</IonLabel>
+                    <IonInput value={size} onIonChange={e => setSize(e.detail.value || '')} />
+                </IonItem>
+                <IonItem className="ion-text-wrap">
+                    <IonLabel className="labels">Availability :</IonLabel>
+                    <IonInput value={availability} onIonChange={e => setAvailability(e.detail.value || '')} />
+                </IonItem>
+                <IonItem className="ion-text-wrap">
+                    <IonLabel className="labels">Data :</IonLabel>
+                    <IonInput value={date} onIonChange={e => setDate(e.detail.value || '')} />
+                </IonItem>
                 <IonLoading isOpen={saving} />
                 {savingError && (
                     <div>{savingError.message || 'Failed to save product'}</div>
