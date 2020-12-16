@@ -16,11 +16,6 @@ import {
     IonInfiniteScroll,
     IonInfiniteScrollContent,
     IonSelectOption,
-    useIonViewWillEnter,
-    IonItem,
-    IonMenuToggle,
-    IonButton,
-    IonLabel,
     IonSearchbar
 } from '@ionic/react';
 import {add, logOut, menu} from 'ionicons/icons';
@@ -35,19 +30,18 @@ import {useAppState} from "../core/UseAppStatus";
 
 const log = getLogger('ProductsList');
 
+
+
 const ProductsList: React.FC<RouteComponentProps> = ({ history }) => {
     const { logout } = useContext(AuthContext);
-    const { products, fetching, fetchingError} = useContext(ProductContext);
+    const { products, fetching, fetchingError, connectedNetworkStatus, settingsSavedOffline, setSettingsSavedOffline} = useContext(ProductContext);
     const [disableInfiniteScroll, setDisableInfiniteScroll] = useState<boolean>(false);
     const [displayed, setDisplayed] = useState<ProductProps[]>([]);
-    const [position, setPosition] = useState(25);
+    const [position, setPosition] = useState(12);
     const [filter, setFilter] = useState<string | undefined>(undefined);
-    const [searchSize, setSearchSize] = useState<string>('');
-    const { networkStatus } = useNetwork();
-    const { appState } = useAppState();
 
     let color, msg;
-    if(networkStatus.connected)
+    if(connectedNetworkStatus)
     {
         color = 'primary';
         msg = 'online';
@@ -61,20 +55,13 @@ const ProductsList: React.FC<RouteComponentProps> = ({ history }) => {
     useEffect(() => {
         if(products?.length)
         {
-            setDisplayed(products?.slice(0, 25));
+            setDisplayed(products?.slice(0, 12));
         }
         else
         {
             setDisplayed([]);
         }
-    }, [products]);
-
-    useEffect(() => {
-        if (products?.length)
-        {
-            setDisplayed(products.filter(obj => obj.size.indexOf(searchSize) == 0));
-        }
-    }, [searchSize]);
+    }, [products, connectedNetworkStatus]);
 
     useEffect(() => {
         if(products && filter)
@@ -84,7 +71,7 @@ const ProductsList: React.FC<RouteComponentProps> = ({ history }) => {
                 setDisplayed(products.filter(obj => obj.availability === filter));
             }
             else {
-                setDisplayed(products?.slice(0, 25));
+                setDisplayed(products?.slice(0, 12));
             }
         }
     }, [filter]);
@@ -127,12 +114,6 @@ const ProductsList: React.FC<RouteComponentProps> = ({ history }) => {
             </IonHeader>
             <IonContent>
                 <IonLoading isOpen={fetching} message="Fetching products"/>
-                <IonSearchbar
-                    value={searchSize}
-                    debounce={300}
-                    onIonChange={e => setSearchSize(e.detail.value!)
-                    }>
-                </IonSearchbar>
                 <IonSelect value={filter} placeholder="Select available products" onIonChange={e => {
                     setFilter(e.detail.value);
                 }}>
@@ -141,10 +122,11 @@ const ProductsList: React.FC<RouteComponentProps> = ({ history }) => {
                     <IonSelectOption value="all products" >All products</IonSelectOption>
                 </IonSelect>
                 <IonList>
-                    {displayed && displayed.map(({ _id, description, price, size, availability, date }) => {
+                    {displayed && displayed.map(({ _id, description, price, size, availability, date, version, hasConflicts, lastModified }) => {
                         return (
                             <Product key={_id} _id={_id} description={description} price={price}
                                      size={size} availability={availability} date={date}
+                                     version={version} hasConflicts={hasConflicts} lastModified={lastModified}
                                      onEdit={id => history.push(`/product/${id}`)}/>
                             );
                     })}
@@ -153,7 +135,7 @@ const ProductsList: React.FC<RouteComponentProps> = ({ history }) => {
                     threshold="5px"
                     disabled={disableInfiniteScroll}
                     onIonInfinite={(e: CustomEvent<void>) => searchNext(e)}>
-                    <IonInfiniteScrollContent loadingText="Loading more products items..."/>
+                    <IonInfiniteScrollContent loadingText="Loading more products ..."/>
                 </IonInfiniteScroll>
                 {fetchingError && (<div>{fetchingError.message || 'Failed to fetch products'}</div>)}
                 <IonFab vertical="bottom" horizontal="end" slot="fixed">

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getLogger } from '../core';
 import { login as loginApi } from './authApi';
 import { Storage } from "@capacitor/core";
+import {LocalStorage} from "../core/storage";
 
 const log = getLogger('AuthProvider');
 
@@ -51,6 +52,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   function logoutCallBack(): void{
     log('logout');
+
     setState({
       ...state,
       token: '',
@@ -61,6 +63,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     });
     (async () => {
       await Storage.remove({ key: 'token' });
+      await LocalStorage.clear().then();
       //await Storage.clear();
     })();
   }

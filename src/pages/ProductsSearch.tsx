@@ -45,10 +45,11 @@ const ProductsSearch: React.FC<RouteComponentProps> = ({history}) => {
                     }>
                 </IonSearchbar>
                 <IonList>
-                    {displayed && displayed.map(({ _id, description, price, size, availability, date }) => {
+                    {displayed && displayed.map(({ _id, description, price, size, availability, date, version, hasConflicts, lastModified }) => {
                         return (
                             <Product key={_id} _id={_id} description={description} price={price}
                                      size={size} availability={availability} date={date}
+                                     version={version} hasConflicts={hasConflicts} lastModified={lastModified}
                                      onEdit={id => history.push(`/product/${id}`)}/>
                         );
                     })}

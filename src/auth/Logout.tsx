@@ -14,7 +14,7 @@ import {
 } from '@ionic/react';
 import {AuthContext, AuthState} from './AuthProvider';
 import { getLogger } from '../core';
-
+import {LocalStorage} from "../core/storage";
 const log = getLogger('Logout');
 
 interface LoginState {

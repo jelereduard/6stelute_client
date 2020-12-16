@@ -4,5 +4,8 @@ export interface ProductProps {
     price: string;
     size: string;
     availability: string;
-    date: string
+    date: string;
+    version: number;
+    lastModified: Date;
+    hasConflicts: boolean;
 }

@@ -24,8 +24,9 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import { ProductProvider } from './product/ProductProvider';
 import { AuthProvider, Login, PrivateRoute, Logout } from './auth';
-import {search, home, filter} from "ionicons/icons";
+import {search, home, alert} from "ionicons/icons";
 import ProductsSearch from "./pages/ProductsSearch";
+import ConflictProduct from "./conflict/ConflictProduct";
 
 const App: React.FC = () => (
   <IonApp>
@@ -40,6 +41,7 @@ const App: React.FC = () => (
               <PrivateRoute path="/product" component={ProductEdit} exact={true}/>
               <PrivateRoute path="/product/:id" component={ProductEdit} exact={true}/>
               <PrivateRoute path="/search/products" component={ProductsSearch} exact={true}/>
+              <PrivateRoute path="/conflict" component={ConflictProduct}/>
             </ProductProvider>
             <Route exact path="/" render={() => <Redirect to="/products"/>}/>
           </AuthProvider>
@@ -53,10 +55,19 @@ const App: React.FC = () => (
             <IonIcon icon={search} />
             <IonLabel>Search products</IonLabel>
           </IonTabButton>
+          <IonTabButton tab="tab3" href="/conflict">
+            <IonIcon icon={alert} />
+            <IonLabel>Conflicts</IonLabel>
+          </IonTabButton>
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>
   </IonApp>
 );
+// Add adauga 2 iteme
+// Inform user about the items not sent to the server
+// Update operations may fail due to version conflicts
+// Inform user about such version conflicts
+// Allow user to resolve version conflicts
 
 export default App;

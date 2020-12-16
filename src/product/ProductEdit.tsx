@@ -31,6 +31,9 @@ const ProductEdit: React.FC<ProductEditProps> = ({ history, match }) => {
     const [size, setSize]                 = useState('');
     const [availability, setAvailability] = useState('');
     const [date, setDate]                 = useState('');
+    const [version,setVersion]            = useState(0);
+    const [hasConflicts,setConflicts]     = useState(false);
+    const [lastModified,setLastModified]  = useState(new Date());
     const [product, setProduct]           = useState<ProductProps>();
     const { networkStatus } = useNetwork();
     useEffect(() => {
@@ -44,12 +47,15 @@ const ProductEdit: React.FC<ProductEditProps> = ({ history, match }) => {
             setSize(product.size);
             setAvailability(product.availability);
             setDate(product.date);
+            setVersion(product.version + 1);
+            setConflicts(false);
+            setLastModified(product.lastModified)
         }
     }, [match.params.id, products]);
 
     const handleSave = () => {
-        const editedProduct = product ? { ...product, description, price, size, availability, date } : { description, price, size, availability, date };
-        saveProduct && saveProduct(editedProduct, networkStatus.connected).then(() => history.goBack());
+        const editedProduct = product ? { ...product, description, price, size, availability, date, version, hasConflicts, lastModified } : { description, price, size, availability, date, version, hasConflicts, lastModified };
+        saveProduct && saveProduct(editedProduct).then(() => history.goBack());
     };
 
     log('render');
