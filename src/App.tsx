@@ -27,6 +27,7 @@ import { AuthProvider, Login, PrivateRoute, Logout } from './auth';
 import {search, home, alert} from "ionicons/icons";
 import ProductsSearch from "./pages/ProductsSearch";
 import ConflictProduct from "./conflict/ConflictProduct";
+import { Home } from './home';
 
 const App: React.FC = () => (
   <IonApp>
@@ -37,6 +38,7 @@ const App: React.FC = () => (
             <Route path="/login" component={Login} exact={true}/>
             <ProductProvider>
               <PrivateRoute path="/login" component={Login} exact={true}/>
+              <PrivateRoute path="/home" component={Home} exact={true}/>
               <PrivateRoute path="/products" component={ProductsList} exact={true}/>
               <PrivateRoute path="/product" component={ProductEdit} exact={true}/>
               <PrivateRoute path="/product/:id" component={ProductEdit} exact={true}/>

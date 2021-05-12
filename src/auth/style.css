@@ -1,0 +1,11 @@
+.two {
+  color: white;
+  background-color: black;
+  margin: 10px;
+  width: 150px;
+  height: 70px;
+  display: inline-block;
+  display: block;
+  flex-wrap: wrap;
+  float: right;
+}

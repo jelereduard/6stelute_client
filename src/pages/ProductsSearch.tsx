@@ -28,19 +28,6 @@ const ProductsSearch: React.FC<RouteComponentProps> = ({history}) => {
     const [longitudine, setLongitudine]             = useState(23.613781929016113);
     const [latitudine, setLatitudine]               = useState(46.77860956692572);
 
-    /*
-    useEffect(() => {
-        if (products?.length) {
-            setDisplayed(products.filter(obj => obj.size.indexOf(searchSize) == 0));
-            const product = displayed[0];
-            if(product) {
-                console.log(product.description);
-                setLatitudine(product.latitudine);
-                setLongitudine(product.longitudine);
-            }
-        }
-    }, [searchSize]);
-*/
     useEffect(() => {
         if (products?.length) {
             setDisplayed(products.filter(obj => obj.description == searchDescription));
@@ -64,7 +51,6 @@ const ProductsSearch: React.FC<RouteComponentProps> = ({history}) => {
                 <IonSearchbar
                     value={searchSize}
                     debounce={300}
-                    //onIonChange={e => setSearchSize(e.detail.value!)
                     onIonChange={e => setSearchDescription(e.detail.value!)
                     }>
                 </IonSearchbar>

@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@capacitor/cli": "2.4.1",
+    "@types/jquery": "^3.5.5",
     "@types/recompose": "^0.30.7",
     "react-scripts": "3.4.0",
     "recompose": "^0.30.0"

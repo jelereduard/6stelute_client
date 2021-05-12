@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router';
 import { IonButton, IonContent, IonHeader, IonInput, IonLoading, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { AuthContext } from './AuthProvider';
 import { getLogger } from '../core';
+import './style.css';
 
 
 const log = getLogger('Login');
@@ -23,7 +24,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
   };
   log('render');
   if (isAuthenticated) {
-    return <Redirect to={{ pathname: '/' }} />
+    return <Redirect to={{ pathname: '/home' }} />
   }
   return (
     <IonPage>
@@ -34,6 +35,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
       </IonHeader>
       <IonContent>
         <IonInput
+          
           placeholder="Username"
           value={username}
           onIonChange={e => setState({
