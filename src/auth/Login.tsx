@@ -30,19 +30,18 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login</IonTitle>
+          <IonTitle className="title"><h1 className="header-logo">QuizzLearn<i className="fab fa-react"></i></h1></IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonInput
-          
+        <IonInput className="textbox-login"     
           placeholder="Username"
           value={username}
           onIonChange={e => setState({
             ...state,
             username: e.detail.value || ''
           })}/>
-        <IonInput
+        <IonInput className="textbox-login"
           placeholder="Password"
           value={password}
           onIonChange={e => setState({
@@ -53,7 +52,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
         {authenticationError && (
           <div>{authenticationError.message || 'Failed to authenticate'}</div>
         )}
-        <IonButton onClick={handleLogin}>Login</IonButton>
+        <IonButton className="login-button" onClick={handleLogin}>Login</IonButton>
       </IonContent>
     </IonPage>
   );
