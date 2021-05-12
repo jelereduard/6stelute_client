@@ -45,7 +45,7 @@ const App: React.FC = () => (
               <PrivateRoute path="/search/products" component={ProductsSearch} exact={true}/>
               <PrivateRoute path="/conflict" component={ConflictProduct}/>
             </ProductProvider>
-            <Route exact path="/" render={() => <Redirect to="/products"/>}/>
+            <Route exact path="/" render={() => <Redirect to="/home"/>}/>
           </AuthProvider>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { authConfig, baseUrl, getLogger, withLogs } from '../core';
 import { LeaderBoardProps } from './leaderBoardProps';
 
-const itemUrl = `http://${baseUrl}/api/item/leaderboard/2`;
+const itemUrl = `http://${baseUrl}/api/item/leaderboard`;
 
 export const getItems: (token: string) => Promise<LeaderBoardProps[]> = token => {
   return withLogs(axios.get(itemUrl, authConfig(token)), 'getItems');
@@ -13,7 +13,7 @@ export const createItem: (token: string, item: LeaderBoardProps) => Promise<Lead
 }
 
 export const updateItem: (token: string, item: LeaderBoardProps) => Promise<LeaderBoardProps[]> = (token, item) => {
-  return withLogs(axios.put(`${itemUrl}/${item._id}`, item, authConfig(token)), 'updateItem');
+  return withLogs(axios.put(`${itemUrl}/2`, item, authConfig(token)), 'updateItem');
 }
 
 interface MessageData {

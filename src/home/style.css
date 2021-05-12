@@ -1,4 +1,10 @@
 #leaderboard {
   border: 1px solid whitesmoke;
-  
+  text-align: center;
 } 
+
+.ion-button {
+  width: 100%;
+  padding: 0 5%;
+  margin: 30px 0;
+}

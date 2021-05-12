@@ -1,10 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonLoading, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonInput, IonLoading, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { getLogger } from '../core';
 import './style.css';
-import './funcs';
+import Leaderboard from '../leaderboard/Leaderboard';
+import { logOut } from 'ionicons/icons';
+import { AuthContext } from '../auth/AuthProvider';
+
+const log = getLogger('Home');
 
 interface Utils{
   showing?:boolean;
@@ -13,9 +17,17 @@ interface Utils{
 }
 
 export const Home: React.FC<RouteComponentProps> = ({ history }) => {
-
+  const { logout } = useContext(AuthContext);
   let [state, setState] = useState<Utils>({});
-  const { showing } = state;
+  const { showing, idModul, numeModul } = state;
+
+
+  const handleLogout = () => {
+    log('handleLogout...');
+    logout?.();
+    return <Redirect to={{ pathname: '/login' }} />
+};
+
   return(
     <IonPage>
       <IonHeader>
@@ -24,43 +36,47 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent>
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              <IonRow>
-              <IonButton size="large" color="primary" onClick={() => setState({ showing: true })}>
+      <IonContent className="ion-content">
+        <IonGrid className="ion-grid">
+          <IonRow className="ion-row">
+            <IonCol className="ion-col">
+              <IonRow className="ion-row">
+              <IonButton className="ion-button" size="large" color="primary" id="1" onClick={() => setState({
+                 showing: true, numeModul: 'Modul 1',idModul: '1' 
+                 })}>
                 MODULUL 1 - Individual work role creativity and innovation
               </IonButton>
               </IonRow>
-              <IonRow>
-              <IonButton size="large" color="primary">
+              <IonRow className="ion-row">
+              <IonButton className="ion-button" size="large" color="primary"onClick={() => setState({
+                 showing: true, numeModul: 'Modul 2',idModul: '2' 
+                 })}>
                 MODULUL 2 - Factori individuali
               </IonButton>
               </IonRow>
-              <IonRow>
-              <IonButton  size="large" color="primary">
+              <IonRow className="ion-row">
+              <IonButton className="ion-button"  size="large" color="primary"onClick={() => setState({
+                 showing: true, numeModul: 'Modul 3',idModul: '3' 
+                 })}>
                 MODULUL 3 - Contextul social/ Task context
               </IonButton>
               </IonRow>
             </IonCol>
-            <IonCol>
+            <IonCol className="ion-col">
+              
+                
               <div id="leaderboard" style={{ display: (showing ? 'block' : 'none') }}>
-                <h1>Tabela scor modul ales</h1>
-                <IonGrid>
-                  <IonRow>
-                    <IonCol>
-                      <h1>User</h1>
-                    </IonCol>
-                    <IonCol>
-                      <h1>Scor</h1>
-                    </IonCol>
-                  </IonRow>
-                </IonGrid>
+                <h1>Tabela scor {state.numeModul}</h1>
+                <Leaderboard/>
               </div>
             </IonCol>
           </IonRow>
         </IonGrid>
+        <IonFab vertical="bottom" horizontal="start" slot="fixed">
+                    <IonFabButton onClick={handleLogout}>
+                        <IonIcon icon={logOut}/>
+                    </IonFabButton>
+                </IonFab>
       </IonContent>
     </IonPage>
   );
