@@ -5,7 +5,7 @@ import {LocalStorage} from "../core/storage";
 
 const {v4: uuidv4} = require('uuid');
 
-const productUrl = `http://${baseUrl}/api/product`;
+const productUrl = `http://${baseUrl}/api/item/leadeasdrboard/2`;
 
 export const getProducts: (token: string, networkStatus:boolean) => Promise<ProductProps[]> =
     async (token,networkStatus) => {
@@ -77,7 +77,7 @@ export const syncDataWithServer:(token:string) => Promise<ProductProps[]> = asyn
     const conflictProducts = [];
     for(const prod in products){
         const product = products[prod];
-        if(product.version == 0){
+        if(product.version === 0){
             await createProduct(token,product,true);
         }
         else{

@@ -1,12 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-import { IonButton, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonInput, IonLoading, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { getLogger } from '../core';
 import './style.css';
-import Leaderboard from '../leaderboard/Leaderboard';
 import { logOut } from 'ionicons/icons';
 import { AuthContext } from '../auth/AuthProvider';
+import LeaderboardList from '../leaderboard/LeaderboardList';
 
 const log = getLogger('Home');
 
@@ -67,7 +67,7 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
                 
               <div id="leaderboard" style={{ display: (showing ? 'block' : 'none') }}>
                 <h1>Tabela scor {state.numeModul}</h1>
-                <Leaderboard/>
+                <LeaderboardList/>
               </div>
             </IonCol>
           </IonRow>

@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react'
 import {RouteComponentProps} from 'react-router';
 import {ProductProps} from "../product/ProductProps";
 import {ProductContext} from "../product/ProductProvider";
-import ProductsList from "../product/ProductsList";
 import {
     IonButton,
     IonCard,

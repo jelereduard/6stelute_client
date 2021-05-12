@@ -1,5 +1,5 @@
-export interface LeaderBoardProps {
+export interface LeaderboardProps {
   _id?: string;
-  user: string;
+  username: string;
   score: string;
 }

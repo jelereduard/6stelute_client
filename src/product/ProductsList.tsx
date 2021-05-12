@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import {
     IonContent,
-    IonCard,
     IonFab,
     IonSelect,
     IonFabButton,
@@ -15,18 +14,14 @@ import {
     IonToolbar,
     IonInfiniteScroll,
     IonInfiniteScrollContent,
-    IonSelectOption,
-    IonSearchbar
-} from '@ionic/react';
-import {add, logOut, menu} from 'ionicons/icons';
+    IonSelectOption} from '@ionic/react';
+import {add, logOut} from 'ionicons/icons';
 import Product from './Product';
 import { getLogger } from '../core';
 import { ProductContext } from './ProductProvider';
 import {Redirect} from "react-router-dom";
 import {AuthContext} from "../auth";
 import {ProductProps} from "./ProductProps";
-import {useNetwork} from "../core/UseNetState";
-import {useAppState} from "../core/UseAppStatus";
 
 const log = getLogger('ProductsList');
 
@@ -34,7 +29,7 @@ const log = getLogger('ProductsList');
 
 const ProductsList: React.FC<RouteComponentProps> = ({ history }) => {
     const { logout } = useContext(AuthContext);
-    const { products, fetching, fetchingError, connectedNetworkStatus, settingsSavedOffline, setSettingsSavedOffline} = useContext(ProductContext);
+    const { products, fetching, fetchingError, connectedNetworkStatus} = useContext(ProductContext);
     const [disableInfiniteScroll, setDisableInfiniteScroll] = useState<boolean>(false);
     const [displayed, setDisplayed] = useState<ProductProps[]>([]);
     const [position, setPosition] = useState(12);

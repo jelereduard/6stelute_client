@@ -22,12 +22,14 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import { ProductProvider } from './product/ProductProvider';
-import { AuthProvider, Login, PrivateRoute, Logout } from './auth';
+import { ProductProvider } from './leaderboard/leaderboardProvider';
+import { AuthProvider, Login, PrivateRoute } from './auth';
 import {search, home, alert} from "ionicons/icons";
 import ProductsSearch from "./pages/ProductsSearch";
 import ConflictProduct from "./conflict/ConflictProduct";
 import { Home } from './home';
+import Leaderboard from './leaderboard/Leaderboard';
+import LeaderboardList from './leaderboard/LeaderboardList';
 
 const App: React.FC = () => (
   <IonApp>
@@ -39,10 +41,11 @@ const App: React.FC = () => (
             <ProductProvider>
               <PrivateRoute path="/login" component={Login} exact={true}/>
               <PrivateRoute path="/home" component={Home} exact={true}/>
-              <PrivateRoute path="/products" component={ProductsList} exact={true}/>
-              <PrivateRoute path="/product" component={ProductEdit} exact={true}/>
-              <PrivateRoute path="/product/:id" component={ProductEdit} exact={true}/>
-              <PrivateRoute path="/search/products" component={ProductsSearch} exact={true}/>
+              <PrivateRoute path="/leaderboard" component={LeaderboardList} exact={true}/>
+              {/* <PrivateRoute path="/products" component={ProductsList} exact={true}/> */}
+              {/* <PrivateRoute path="/product" component={ProductEdit} exact={true}/> */}
+              {/* <PrivateRoute path="/product/:id" component={ProductEdit} exact={true}/> */}
+              {/* <PrivateRoute path="/search/products" component={ProductsSearch} exact={true}/> */}
               <PrivateRoute path="/conflict" component={ConflictProduct}/>
             </ProductProvider>
             <Route exact path="/" render={() => <Redirect to="/home"/>}/>

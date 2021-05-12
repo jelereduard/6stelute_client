@@ -1,46 +1,17 @@
-import React, { useContext } from 'react';
-import {
-  IonCol,
-  IonContent,
-  IonGrid,
-  IonList,
-  IonLoading,
-  IonRow} from '@ionic/react';
-import { getLogger } from '../core';
-import { ItemContext } from './leaderboardProvider';
-import LeaderBoardUser  from './leaderBoardUser';
+import React from 'react';
+import { IonItem, IonLabel } from '@ionic/react';
+import { LeaderboardProps } from './LeaderboardProps';
 
+interface LeaderboardPropsPropsExt extends LeaderboardProps {
+    onEdit: (_id?: string) => void;
+}
 
-const log = getLogger('Leaderboard');
-
-const Leaderboard = () => {
-  const { items, fetching, fetchingError } = useContext(ItemContext);
-  log('render');
-  return (
-        <IonGrid>
-          <IonLoading isOpen={fetching} message="Fetching items"/>
-          {items && (
-          <IonList>
-            {items.map(({ _id, user, score }) => 
-                <LeaderBoardUser key={_id} _id={_id} user={user} score={score}/>)
-            }
-          </IonList>
-        )}
-        {fetchingError && (
-          <div>{fetchingError.message || 'Failed to fetch items'}</div>
-        )}
-          <IonRow className="ion-row">
-            <IonCol className="ion-col">
-              {items}
-              
-            </IonCol>
-            <IonCol className="ion-col">
-              <h1>Scor</h1>
-            </IonCol>
-          </IonRow>
-          
-          </IonGrid>
-  );
+const Leaderboard: React.FC<LeaderboardPropsPropsExt> = ({ _id, username, score, onEdit }) => {
+    return (
+        <IonItem onClick={() => onEdit(_id)}>
+            <IonLabel>{username} {score}</IonLabel>
+        </IonItem>
+    );
 };
 
 export default Leaderboard;
