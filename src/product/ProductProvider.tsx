@@ -165,6 +165,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
             log('saveProduct succeeded');
             dispatch({ type: SAVE_PRODUCT_SUCCEEDED, payload: { product: savedProduct } });
             if (!connectedNetworkStatus) {
+                alert("The product couldn't be sent to the server!");
                 setSettingsSavedOffline(true);
             }
         } catch (error) {

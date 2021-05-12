@@ -8,4 +8,6 @@ export interface ProductProps {
     version: number;
     lastModified: Date;
     hasConflicts: boolean;
+    longitudine: number;
+    latitudine: number;
 }
