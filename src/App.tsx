@@ -52,18 +52,18 @@ const App: React.FC = () => (
           </AuthProvider>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/products">
+          <IonTabButton tab="tab1" href="/home">
             <IonIcon icon={home} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/search/products">
+          {/* <IonTabButton tab="tab2" href="/search/products">
             <IonIcon icon={search} />
             <IonLabel>Search products</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab3" href="/conflict">
             <IonIcon icon={alert} />
             <IonLabel>Conflicts</IonLabel>
-          </IonTabButton>
+          </IonTabButton> */}
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>

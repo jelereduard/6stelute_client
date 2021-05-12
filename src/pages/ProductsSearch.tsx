@@ -44,7 +44,7 @@ const ProductsSearch: React.FC<RouteComponentProps> = ({history}) => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>My Shop App</IonTitle>
+                    <IonTitle>QuizzLearn</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
