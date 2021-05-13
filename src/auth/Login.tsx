@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-import { IonButton, IonContent, IonHeader, IonInput, IonLoading, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCard, IonContent, IonHeader, IonInput, IonLoading, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { AuthContext } from './AuthProvider';
 import { getLogger } from '../core';
 import './style.css';
@@ -33,7 +33,8 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
           <IonTitle className="title"><h1 className="header-logo">QuizzLearn<i className="fab fa-react"></i></h1></IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
+      <IonContent className="ion-content">
+        <IonCard className="ion-card">
         <IonInput className="textbox-login"     
           placeholder="Username"
           value={username}
@@ -53,6 +54,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
           <div>{authenticationError.message || 'Failed to authenticate'}</div>
         )}
         <IonButton className="login-button" onClick={handleLogin}>Login</IonButton>
+        </IonCard>
       </IonContent>
     </IonPage>
   );

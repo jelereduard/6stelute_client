@@ -52,3 +52,26 @@
   margin-top: 10px;
   cursor: pointer;
 }
+
+.ion-card{
+  display: flexbox;
+  margin: auto;
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  text-align: center;
+  width: fit-content;
+  height: fit-content;
+  padding: 3%;
+  padding-right: 5%;
+  margin-top: 140px;
+}
+
+.ion-content{
+  display: flexbox;
+  margin: auto;
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  text-align: center;
+}
