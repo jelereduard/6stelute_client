@@ -35,6 +35,11 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
       <IonHeader>
         <IonToolbar>
           <IonTitle className="title"><h1 className="header-logo">QuizzLearn<i className="fab fa-react"></i></h1></IonTitle>
+          <IonFab vertical="bottom" horizontal="start" slot="fixed">
+                    <IonFabButton onClick={handleLogout}>
+                        <IonIcon icon={logOut}/>
+                    </IonFabButton>
+        </IonFab>
         </IonToolbar>
       </IonHeader>
 
@@ -94,11 +99,6 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
             </IonCol>
           </IonRow>
         </IonGrid>
-        <IonFab vertical="bottom" horizontal="start" slot="fixed">
-                    <IonFabButton onClick={handleLogout}>
-                        <IonIcon icon={logOut}/>
-                    </IonFabButton>
-        </IonFab>
       </IonContent>
     </IonPage>
   );

@@ -42,7 +42,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
             ...state,
             username: e.detail.value || ''
           })}/>
-        <IonInput className="textbox-login"
+        <IonInput type="password" className="textbox-login"
           placeholder="Password"
           value={password}
           onIonChange={e => setState({
