@@ -8,7 +8,7 @@ import './style.css'
 export const Quiz: React.FC<RouteComponentProps> = () => {
 
   const [paragrafCurent, setParagrafCurent] = useState(0);
-  const [intrebareCurenta, setIntrebareCurenta] = useState(0);
+  const [intrebareCurenta, setIntrebareCurenta] = useState(-1);
   const [scor, setScor] = useState(0);
   const [scorIntrebare, setScorIntrebare] = useState(0);
 
@@ -25,7 +25,7 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
         <IonGrid className="ion-grid">
           <IonRow className="ion-row">
             <IonCol className="ion-col">
-              <IonRow className="ion-row">
+              <IonRow className="ion-row" style={{display:(intrebareCurenta ===-1 ? '' : 'none')}}>
                 <IonCol>
                 <IonButton className="ion-button-bubble" color="tertiary"onClick={() =>
                     setParagrafCurent(paragrafCurent=>{
@@ -44,7 +44,7 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
               </IonButton>
                 </IonCol>
               </IonRow>
-              <IonRow className="ion-row">
+              <IonRow className="ion-row" style={{display:(intrebareCurenta ===-1 ? '' : 'none')}}>
                 <h3>Bubble {paragrafCurent+1} / 10</h3>
                 <p className="bubble-text" id='1' style={{display:(paragrafCurent === 0 ? 'block' : 'none')}}>&nbsp;&nbsp;&nbsp;Cercetările asupra creativității individuale în organizații fac progrese considerabile în înțelegerea modului și a momentelor în care oamenii dezvoltă idei noi și folositoare la locul de muncă. De asemenea, cercetătorii au examinat modul în care creativitatea apare în urma interacțiunii dintre un individ și mediul în care aceasta lucrează.</p>
                 <p className="bubble-text" id='2' style={{display:(paragrafCurent === 1 ? 'block' : 'none')}}>&nbsp;&nbsp;&nbsp;Creativitatea poate fi definită ca un răspuns adaptativ la mediu, prin care individul poate să ajungă la niște stări dorite sau să depășească niște amenințări din mediu. Stările pozitive și negative influențează creativitatea prin impactul lor asupra funcționării cognitive.</p>
@@ -59,14 +59,14 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
               
               </IonRow>
             </IonCol>
-            <IonCol className="ion-col">
+            <IonCol id="intrebari" className="ion-col">
               
                 <IonRow id="set-1" className="header-row">
 
                   <IonList style={{display:(intrebareCurenta === 0 ? 'block' : 'none')}}>
-                    <IonRadioGroup>
-                      <IonListHeader>
-                        <IonLabel>
+                    <IonRadioGroup className="ion-group">
+                      <IonListHeader className="ion-header">
+                        <IonLabel className="ion-label">
                         Conform informatiilor precizate anterior, care dintre urmatoarele elemente influenteaza creativitatea la nivel individual?
                         </IonLabel>
                       </IonListHeader>
@@ -184,13 +184,25 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
                       }
                       return (intrebareCurenta+1)%10
                     }))}
-                    style={{ display:(intrebareCurenta != 4 ? 'block' : 'none') }}>
+                    style={{ display:(intrebareCurenta != 4 && intrebareCurenta != -1 ? 'block' : 'none') }}>
                   next
                 </IonButton>
                 
                 <IonButton className="ion-button"  size="large" color="primary"href="/home"
                     style={{display:(intrebareCurenta === 4 ? 'block' : 'none')}}>
                   finish
+                </IonButton>
+
+                <IonButton className="ion-button"  size="large" color="primary"onClick={() =>(
+                  setIntrebareCurenta(intrebareCurenta => {
+                    if(intrebareCurenta === 4) {
+                      
+                      return intrebareCurenta
+                    }
+                    return (intrebareCurenta+1)%10
+                  }))}
+                    style={{display:(intrebareCurenta === -1 ? 'block' : 'none')}}>
+                  start
                 </IonButton>
 
 
