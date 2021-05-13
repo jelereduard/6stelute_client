@@ -1,6 +1,7 @@
 import React from 'react';
 import { IonItem, IonLabel } from '@ionic/react';
-import { LeaderboardProps } from './LeaderboardProps';
+import { LeaderboardProps } from './leaderBoardProps';
+import './style.css'
 
 interface LeaderboardPropsPropsExt extends LeaderboardProps {
     onEdit: (_id?: string) => void;
@@ -9,7 +10,7 @@ interface LeaderboardPropsPropsExt extends LeaderboardProps {
 const Leaderboard: React.FC<LeaderboardPropsPropsExt> = ({ _id, username, score, onEdit }) => {
     return (
         <IonItem onClick={() => onEdit(_id)}>
-            <IonLabel>{username} {score}</IonLabel>
+            <IonLabel className="leaderboard-row">{username} {score}</IonLabel>
         </IonItem>
     );
 };

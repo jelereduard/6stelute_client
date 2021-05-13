@@ -21,7 +21,8 @@ import { getLogger } from '../core';
 import { ProductContext } from './leaderboardProvider';
 import {Redirect} from "react-router-dom";
 import {AuthContext} from "../auth";
-import {LeaderboardProps as ProductProps} from "./LeaderboardProps";
+import {LeaderboardProps as ProductProps} from "./leaderBoardProps";
+import './style.css'
 
 const log = getLogger('LeaderboardList');
 
