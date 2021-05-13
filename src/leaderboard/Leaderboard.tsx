@@ -1,6 +1,6 @@
 import React from 'react';
 import { IonItem, IonLabel } from '@ionic/react';
-import { LeaderboardProps } from './leaderBoardProps';
+import { LeaderboardProps } from './LeaderboardProps';
 import './style.css'
 
 interface LeaderboardPropsPropsExt extends LeaderboardProps {

@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import { getLogger } from '../core';
-import { LeaderboardProps as ProductProps } from './leaderBoardProps';
+import { LeaderboardProps as ProductProps } from './LeaderboardProps';
 import { createLeaderboard as createProduct, getLeaderboard as getProducts, newWebSocket, syncDataWithServer, updateLeaderboard as updateProduct } from './leaderboardApi';
 import { AuthContext } from '../auth';
 import {Network} from "@capacitor/core";
@@ -48,17 +48,7 @@ const reducer: (state: ProductsState, action: ActionProps) => ProductsState =
             case FETCH_PRODUCTS_STARTED:
                 return { ...state, fetching: true, fetchingError: null };
             case FETCH_PRODUCTS_SUCCEEDED:
-                const allProducts: ProductProps[] = [...(state.products || [])];
-                payload.products
-                    .forEach((product : ProductProps) =>{
-                        const index = allProducts.findIndex((it: ProductProps) => it._id === product._id);
-                        if (index === -1) {
-                            allProducts.push(product);
-                        } else {
-                            allProducts[index] = product;
-                        }
-                    });
-                return { ...state, products: allProducts, fetching: false };
+                return { ...state, products: payload.products, fetching: false };
             case FETCH_PRODUCTS_FAILED:
                 return { ...state, fetchingError: payload.error, fetching: false };
             case SAVE_PRODUCT_STARTED:

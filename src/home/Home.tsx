@@ -67,6 +67,14 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
                 
               <div id="leaderboard" style={{ display: (showing ? 'block' : 'none') }}>
                 <h1>Tabela scor {state.numeModul}</h1>
+                <IonRow>
+                  <IonCol>
+                    <h1>User</h1>
+                  </IonCol>
+                  <IonCol>
+                    <h1>Scor</h1>
+                  </IonCol>
+                </IonRow>
                 <LeaderboardList/>
               </div>
             </IonCol>

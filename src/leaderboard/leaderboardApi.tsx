@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { authConfig, baseUrl, getLogger } from '../core';
-import { LeaderboardProps } from './leaderBoardProps';
+import { LeaderboardProps } from './LeaderboardProps';
 import {LocalStorage} from "../core/storage";
 
 const {v4: uuidv4} = require('uuid');
@@ -9,33 +9,18 @@ const leaderboardUrl = `http://${baseUrl}/api/item/leaderboard/2`;
 
 export const getLeaderboard: (token: string, networkStatus:boolean) => Promise<LeaderboardProps[]> =
     async (token,networkStatus) => {
-        if(networkStatus){
-            const localLeaderboards = await getLeaderboardsLocal("leaderboards");
-            setIfModifiedSinceHeader(localLeaderboards,authConfig(token));
+            //const localLeaderboards = await getLeaderboardsLocal("leaderboards");
+            //setIfModifiedSinceHeader(localLeaderboards,authConfig(token));
             return axios.get(leaderboardUrl, authConfig(token))
-                .then( response => {
-                    const leaderboards = response.data;
-                    console.log('200');
-                    leaderboards.forEach( (leaderboard: LeaderboardProps) =>{
-                        const index = localLeaderboards.findIndex(it => it._id === leaderboard._id);
-                        if(index === -1){
-                            localLeaderboards.push(leaderboard);
-                        } else{
-                            localLeaderboards[index] = leaderboard;
-                        }
-                        LocalStorage.set(`leaderboards/${leaderboard._id}`,leaderboard).then();
-                    });
-                    return localLeaderboards;
-                })
+                .then( response => 
+                 response.data
+                )
                 .catch(err => {
                     if(err.response?.status === 304){
                         console.log('304');
-                        return localLeaderboards;
+                        return ;
                     }
-                    return getLeaderboardsLocal('leaderboards');
                 });
-        }
-        return getLeaderboardsLocal('leaderboards');
 }
 
 export const createLeaderboard: (token: string, leaderboard: LeaderboardProps, networkStatus:boolean) => Promise<LeaderboardProps> = (token, leaderboard, networkStatus) => {
