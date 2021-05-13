@@ -77,13 +77,13 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
               
                 
               <div id="leaderboard" style={{ display: (showing ? 'block' : 'none') }}>
-                <h1>Tabela scor {state.numeModul}</h1>
-                <IonRow>
+                <h2>Tabel scor {state.numeModul}</h2>
+                <IonRow className="header-row">
                   <IonCol>
-                    <h1>User</h1>
+                    <h4>User</h4>
                   </IonCol>
                   <IonCol>
-                    <h1>Scor</h1>
+                    <h4>Scor</h4>
                   </IonCol>
                 </IonRow>
 
@@ -97,7 +97,7 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
                     <IonFabButton onClick={handleLogout}>
                         <IonIcon icon={logOut}/>
                     </IonFabButton>
-                </IonFab>
+        </IonFab>
       </IonContent>
     </IonPage>
   );

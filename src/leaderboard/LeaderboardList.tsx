@@ -6,7 +6,7 @@ import {
 import Product from './Leaderboard';
 import { getLogger } from '../core';
 import { ProductContext } from './leaderboardProvider';
-import {LeaderboardProps, LeaderboardProps as ProductProps} from "./LeaderboardProps";
+import {LeaderboardProps as ProductProps} from "./leaderboardProps";
 import './style.css'
 
 const log = getLogger('LeaderboardList');

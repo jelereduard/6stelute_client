@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import { getLogger } from '../core';
-import { LeaderboardProps as ProductProps } from './LeaderboardProps';
+import { LeaderboardProps as ProductProps } from './leaderboardProps';
 import { createLeaderboard as createProduct, getLeaderboard as getProducts, newWebSocket, syncDataWithServer, updateLeaderboard as updateProduct } from './leaderboardApi';
 import { AuthContext } from '../auth';
 import {Network} from "@capacitor/core";

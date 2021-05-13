@@ -1,3 +1,10 @@
-.leaderboard-row {
-   align-self: center;
+.leaderboard-user-column {
+   border-right: 1px solid black;
+   border-bottom: 1px solid rgb(19, 233, 222);
+   font-size: 1.2rem
 }
+
+.leaderboard-score-column {
+    border-bottom: 1px solid rgb(19, 233, 222);
+    font-size: 1.2rem
+ }
