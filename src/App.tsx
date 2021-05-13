@@ -30,6 +30,7 @@ import ConflictProduct from "./conflict/ConflictProduct";
 import { Home } from './home';
 import Leaderboard from './leaderboard/Leaderboard';
 import LeaderboardList from './leaderboard/LeaderboardList';
+import { Quiz } from './quiz/Quiz';
 
 const App: React.FC = () => (
   <IonApp>
@@ -38,14 +39,11 @@ const App: React.FC = () => (
         <IonRouterOutlet>
           <AuthProvider>
             <Route path="/login" component={Login} exact={true}/>
+            <Route path="/quiz" component={Quiz} exact={true}/>
             <ProductProvider>
               <PrivateRoute path="/login" component={Login} exact={true}/>
               <PrivateRoute path="/home" component={Home} exact={true}/>
               <PrivateRoute path="/leaderboard" component={LeaderboardList} exact={true}/>
-              {/* <PrivateRoute path="/products" component={ProductsList} exact={true}/> */}
-              {/* <PrivateRoute path="/product" component={ProductEdit} exact={true}/> */}
-              {/* <PrivateRoute path="/product/:id" component={ProductEdit} exact={true}/> */}
-              {/* <PrivateRoute path="/search/products" component={ProductsSearch} exact={true}/> */}
               <PrivateRoute path="/conflict" component={ConflictProduct}/>
             </ProductProvider>
             <Route exact path="/" render={() => <Redirect to="/home"/>}/>
@@ -56,14 +54,6 @@ const App: React.FC = () => (
             <IonIcon icon={home} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
-          {/* <IonTabButton tab="tab2" href="/search/products">
-            <IonIcon icon={search} />
-            <IonLabel>Search products</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/conflict">
-            <IonIcon icon={alert} />
-            <IonLabel>Conflicts</IonLabel>
-          </IonTabButton> */}
         </IonTabBar>
       </IonTabs>
     </IonReactRouter>

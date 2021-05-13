@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { authConfig, baseUrl, getLogger } from '../core';
-import { LeaderboardProps } from './leaderboardProps';
+import { LeaderboardProps } from './LeaderboardProps';
 import {LocalStorage} from "../core/storage";
 
 const {v4: uuidv4} = require('uuid');
