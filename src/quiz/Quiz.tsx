@@ -24,7 +24,7 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
       <IonContent className="ion-content">
         <IonGrid className="ion-grid">
           <IonRow className="ion-row">
-            <IonCol className="ion-col">
+            <IonCol className="ion-col2">
               <IonRow className="ion-row" style={{display:(intrebareCurenta ===-1 ? '' : 'none')}}>
                 <IonCol>
                 <IonButton className="ion-button-bubble" color="tertiary"onClick={() =>
@@ -61,13 +61,13 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
             </IonCol>
             <IonCol id="intrebari" className="ion-col">
               
-                <IonRow id="set-1" className="header-row">
+                <IonRow className="q-list" id="set-1">
 
                   <IonList style={{display:(intrebareCurenta === 0 ? 'block' : 'none')}}>
-                    <IonRadioGroup className="ion-group">
-                      <IonListHeader className="ion-header">
-                        <IonLabel className="ion-label">
-                        Conform informatiilor precizate anterior, care dintre urmatoarele elemente influenteaza creativitatea la nivel individual?
+                    <IonRadioGroup>
+                      <IonListHeader>
+                        <IonLabel className="question">
+                          &nbsp;Conform informatiilor precizate anterior, care dintre urmatoarele elemente influenteaza creativitatea la nivel individual?
                         </IonLabel>
                       </IonListHeader>
 
@@ -77,7 +77,7 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
                       </IonItem>
 
                       <IonItem>
-                        <IonLabel >b) Frecventa pauzelor din timpul programului de munca</IonLabel>
+                        <IonLabel>b) Frecventa pauzelor din timpul programului de munca</IonLabel>
                         <IonRadio value="b" onClick={ () => setScorIntrebare(0)} />
                       </IonItem>
 
@@ -89,10 +89,10 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
                   </IonList>
 
 
-                  <IonList  id="set-2" style={{display:(intrebareCurenta === 1 ? 'block' : 'none')}}>
+                  <IonList className="q-list" id="set-2" style={{display:(intrebareCurenta === 1 ? 'block' : 'none')}}>
                     <IonRadioGroup>
                       <IonListHeader>
-                        <IonLabel>
+                        <IonLabel className="question">
                           Raportat la trasaturile de personalitate, care dintre urmatoarele reprezinta un stimulent al creativitatii?
                         </IonLabel>
                       </IonListHeader>
@@ -115,10 +115,10 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
                   </IonList>
 
 
-                  <IonList  id="set-3" style={{display:(intrebareCurenta === 2 ? 'block' : 'none')}}>
+                  <IonList className="q-list" id="set-3" style={{display:(intrebareCurenta === 2 ? 'block' : 'none')}}>
                     <IonRadioGroup>
                       <IonListHeader>
-                        <IonLabel>
+                        <IonLabel className="question">
                           Conform studiilor unor autori, nivelul individual de proactivitate poate sa creasca atunci când:
                         </IonLabel>
                       </IonListHeader>
@@ -140,10 +140,10 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
                     </IonRadioGroup>
                   </IonList>
                   
-                  <IonList  id="set-4" style={{display:(intrebareCurenta === 3 ? 'block' : 'none')}}>
+                  <IonList className="q-list" id="set-4" style={{display:(intrebareCurenta === 3 ? 'block' : 'none')}}>
                     <IonRadioGroup>
                       <IonListHeader>
-                        <IonLabel>
+                        <IonLabel className="question">
                           Realizările creative complexe sunt rezultatul:
                         </IonLabel>
                       </IonListHeader>
@@ -166,10 +166,10 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
                   </IonList>
 
                   <div id="scor" style={{display:(intrebareCurenta === 4 ? 'block' : 'none')}} >
-                    <h1>Scor: {scor} </h1>
+                    <h2 className="score">Scorul obtinut este: {scor} /40 </h2>
                   </div>
 
-                  <IonButton className="ion-button"  size="large" color="primary"onClick={() =>(
+                  <IonButton className="ion-button-quiz"  size="large" color="primary"onClick={() =>(
 
                     setScor(scor => {
                       let scoraux=scorIntrebare
@@ -185,13 +185,17 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
                       return (intrebareCurenta+1)%10
                     }))}
                     style={{ display:(intrebareCurenta != 4 && intrebareCurenta != -1 ? 'block' : 'none') }}>
-                  next
+                  Urmatoarea intrebare
                 </IonButton>
                 
-                <IonButton className="ion-button"  size="large" color="primary"href="/home"
+                <IonButton className="ion-button-quiz"  size="large" color="primary"href="/home"
                     style={{display:(intrebareCurenta === 4 ? 'block' : 'none')}}>
                   finish
                 </IonButton>
+                
+                <IonLabel className="info" style={{display:(intrebareCurenta === -1 ? 'block' : 'none')}}>
+                  Scorul maxim posibil pentru acest chestionar este 40. 
+                </IonLabel>
 
                 <IonButton className="ion-button"  size="large" color="primary"onClick={() =>(
                   setIntrebareCurenta(intrebareCurenta => {
@@ -202,7 +206,7 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
                     return (intrebareCurenta+1)%10
                   }))}
                     style={{display:(intrebareCurenta === -1 ? 'block' : 'none')}}>
-                  start
+                  Incepe QUIZ-ul
                 </IonButton>
 
 

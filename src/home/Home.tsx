@@ -41,7 +41,7 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
       <IonContent className="ion-content">
         <IonGrid className="ion-grid">
           <IonRow className="ion-row">
-            <IonCol className="ion-col">
+            <IonCol className="ion-col2">
               <IonRow className="ion-row">
               <IonButton className="ion-button" size="large" color="primary" id="1" onClick={() => {setState({
                  showing: true, numeModul: 'Modul 1',idModul: '1' 
@@ -75,7 +75,7 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
             </IonCol>
             <IonCol className="ion-col">
               <IonRow style={{ display: (showing ? 'block' : 'none') }}>
-                <IonButton href="/quiz" className="ion-button-quiz" color="success">
+                <IonButton href="/quiz" className="ion-button-start-quiz" color="success">
                   Start Modul
                 </IonButton>
               </IonRow>
