@@ -1,0 +1,12 @@
+.bubble-text{
+    border: 1px solid rgba(26, 102, 226, 0.89);
+    font-size: 1.2rem;
+    padding: 2%;
+    text-align: justify;
+}
+
+.ion-button-bubble {
+    width: 100%;
+    font-size: 1.2rem;
+    padding-top: 2%;
+}
