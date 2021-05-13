@@ -5,13 +5,13 @@ import {LocalStorage} from "../core/storage";
 
 const {v4: uuidv4} = require('uuid');
 
-const leaderboardUrl = `http://${baseUrl}/api/item/leaderboard/2`;
+const leaderboardUrl = `http://${baseUrl}/api/item/leaderboard`;
 
-export const getLeaderboard: (token: string, networkStatus:boolean) => Promise<LeaderboardProps[]> =
-    async (token,networkStatus) => {
+export const getLeaderboard: (token: string, idModul:any) => Promise<LeaderboardProps[]> =
+    async (token, idModul) => {
             //const localLeaderboards = await getLeaderboardsLocal("leaderboards");
             //setIfModifiedSinceHeader(localLeaderboards,authConfig(token));
-            return axios.get(leaderboardUrl, authConfig(token))
+            return axios.get(`${leaderboardUrl}/${idModul}`, authConfig(token))
                 .then( response => 
                  response.data
                 )

@@ -6,19 +6,20 @@ import {
 import Product from './Leaderboard';
 import { getLogger } from '../core';
 import { ProductContext } from './leaderboardProvider';
-import {LeaderboardProps as ProductProps} from "./LeaderboardProps";
+import {LeaderboardProps, LeaderboardProps as ProductProps} from "./LeaderboardProps";
 import './style.css'
 
 const log = getLogger('LeaderboardList');
 
+export interface Modul {
+  idModul:any
+}
 
 
-const LeaderboardList: React.FC = ({  }) => {
+const LeaderboardList: React.FC<Modul> = ({idModul}:Modul) => {
     const { products, fetching, fetchingError, connectedNetworkStatus} = useContext(ProductContext);
     const [displayed, setDisplayed] = useState<ProductProps[]>([]);
     const [filter, setFilter] = useState<string | undefined>(undefined);
-
-
 
     useEffect(() => {
         if(products?.length)

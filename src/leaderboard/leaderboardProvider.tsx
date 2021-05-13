@@ -5,10 +5,12 @@ import { LeaderboardProps as ProductProps } from './LeaderboardProps';
 import { createLeaderboard as createProduct, getLeaderboard as getProducts, newWebSocket, syncDataWithServer, updateLeaderboard as updateProduct } from './leaderboardApi';
 import { AuthContext } from '../auth';
 import {Network} from "@capacitor/core";
+import { Modul } from './LeaderboardList';
 
 const log = getLogger('ProductProvider');
 
 type SaveProductFn = (product: ProductProps) => Promise<any>;
+type FetchLeaderboardFn = (idModul: Modul) => Promise<any>;
 
 export interface ProductsState {
     products?: ProductProps[],
@@ -22,6 +24,8 @@ export interface ProductsState {
     setSettingsSavedOffline? : Function,
     conflictProducts?: ProductProps[];
     setConflictProducts?: Function
+    setIdModul?: Function
+    fetchLeaderboard?: Function
 }
 
 interface ActionProps {
@@ -48,7 +52,7 @@ const reducer: (state: ProductsState, action: ActionProps) => ProductsState =
             case FETCH_PRODUCTS_STARTED:
                 return { ...state, fetching: true, fetchingError: null };
             case FETCH_PRODUCTS_SUCCEEDED:
-                return { ...state, products: payload.products, fetching: false };
+                return { ...state, products: payload.fetchedLeaderboard, fetching: false };
             case FETCH_PRODUCTS_FAILED:
                 return { ...state, fetchingError: payload.error, fetching: false };
             case SAVE_PRODUCT_STARTED:
@@ -87,14 +91,17 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
     Network.getStatus().then(status => setConnectedNetworkStatus(status.connected))
     const [conflictProducts, setConflictProducts] = useState<ProductProps[]>([]);
     const [settingsSavedOffline, setSettingsSavedOffline] = useState<boolean>(false);
+    const [idModul, setIdModul] = useState<string>();
 
     useEffect(getProductsEffect, [token,connectedNetworkStatus]);
     useEffect(wsEffect, [token,connectedNetworkStatus]);
     useEffect(networkEffect, [token,setConnectedNetworkStatus,setConflictProducts]);
 
     const saveProduct = useCallback<SaveProductFn>(saveProductCallback, [token,connectedNetworkStatus,setSettingsSavedOffline,setConflictProducts]);
+    const fetchLeaderboard = useCallback<FetchLeaderboardFn>(fetchModuleCallback,
+       [token, idModul]);
     const value = { products, fetching, fetchingError, saving, savingError, saveProduct, connectedNetworkStatus,settingsSavedOffline,
-        setSettingsSavedOffline,conflictProducts};
+        setSettingsSavedOffline,conflictProducts, setIdModul, fetchLeaderboard};
 
 
     log('returns');
@@ -120,7 +127,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
                 dispatch({ type: FETCH_PRODUCTS_STARTED });
                 console.log('fetch Products token:' + token);
                 console.log("Network: ", connectedNetworkStatus)
-                const products = await getProducts(token,connectedNetworkStatus);
+                const products = await getProducts(token,idModul);
                 log('fetchProducts succeeded');
                 if (!canceled) {
                     dispatch({ type: FETCH_PRODUCTS_SUCCEEDED, payload: { products } });
@@ -134,6 +141,14 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({ children }) =>
 
     function random_id() {
         return "_" + Math.random().toString(36).substr(2, 9);
+    }
+
+    async function fetchModuleCallback(idModul:Modul) {
+      console.log(idModul)
+        const fetchedLeaderboard = await getProducts(token,idModul.idModul);
+        dispatch({type:FETCH_PRODUCTS_SUCCEEDED, payload: {fetchedLeaderboard}})
+        
+        
     }
 
     async function saveProductCallback(product: ProductProps) {

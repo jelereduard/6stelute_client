@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import { IonButton, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
@@ -7,6 +7,7 @@ import './style.css';
 import { logOut } from 'ionicons/icons';
 import { AuthContext } from '../auth/AuthProvider';
 import LeaderboardList from '../leaderboard/LeaderboardList';
+import { ProductContext } from '../leaderboard/leaderboardProvider';
 
 const log = getLogger('Home');
 
@@ -17,6 +18,7 @@ interface Utils{
 }
 
 export const Home: React.FC<RouteComponentProps> = ({ history }) => {
+  const { products, fetching, fetchingError, connectedNetworkStatus, setIdModul, fetchLeaderboard} = useContext(ProductContext);
   const { logout } = useContext(AuthContext);
   let [state, setState] = useState<Utils>({});
   const { showing, idModul, numeModul } = state;
@@ -41,23 +43,32 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
           <IonRow className="ion-row">
             <IonCol className="ion-col">
               <IonRow className="ion-row">
-              <IonButton className="ion-button" size="large" color="primary" id="1" onClick={() => setState({
+              <IonButton className="ion-button" size="large" color="primary" id="1" onClick={() => {setState({
                  showing: true, numeModul: 'Modul 1',idModul: '1' 
-                 })}>
+                 }) ;
+                 if(setIdModul && fetchLeaderboard){
+                 setIdModul(1)
+                 fetchLeaderboard({idModul:1})}}}>
                 MODULUL 1 - Individual work role creativity and innovation
               </IonButton>
               </IonRow>
               <IonRow className="ion-row">
-              <IonButton className="ion-button" size="large" color="primary"onClick={() => setState({
+              <IonButton className="ion-button" size="large" color="primary"onClick={() => {setState({
                  showing: true, numeModul: 'Modul 2',idModul: '2' 
-                 })}>
+                 }) ;
+                 if(setIdModul && fetchLeaderboard){
+                 setIdModul(2)
+                 fetchLeaderboard({idModul:2})}}}>
                 MODULUL 2 - Factori individuali
               </IonButton>
               </IonRow>
               <IonRow className="ion-row">
-              <IonButton className="ion-button"  size="large" color="primary"onClick={() => setState({
+              <IonButton className="ion-button"  size="large" color="primary"onClick={() =>  {setState({
                  showing: true, numeModul: 'Modul 3',idModul: '3' 
-                 })}>
+                 }) ;
+                 if(setIdModul && fetchLeaderboard){
+                 setIdModul(3)
+                 fetchLeaderboard({idModul:3})}}}>
                 MODULUL 3 - Contextul social/ Task context
               </IonButton>
               </IonRow>
@@ -75,7 +86,9 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
                     <h1>Scor</h1>
                   </IonCol>
                 </IonRow>
-                <LeaderboardList/>
+
+                <LeaderboardList idModul={idModul}/>
+
               </div>
             </IonCol>
           </IonRow>
