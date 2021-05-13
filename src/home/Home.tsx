@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-import { IonButton, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonTitle, IonToolbar, IonLabel } from '@ionic/react';
 import { getLogger } from '../core';
 import './style.css';
 import { logOut } from 'ionicons/icons';
@@ -74,8 +74,11 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
               </IonRow>
             </IonCol>
             <IonCol className="ion-col">
-              
-                
+              <IonRow style={{ display: (showing ? 'block' : 'none') }}>
+                <IonButton href="/quiz" className="ion-button-quiz" color="success">
+                  Start Modul
+                </IonButton>
+              </IonRow>
               <div id="leaderboard" style={{ display: (showing ? 'block' : 'none') }}>
                 <h2>Tabel scor {state.numeModul}</h2>
                 <IonRow className="header-row">
@@ -86,9 +89,7 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
                     <h4>Scor</h4>
                   </IonCol>
                 </IonRow>
-
                 <LeaderboardList idModul={idModul}/>
-
               </div>
             </IonCol>
           </IonRow>
