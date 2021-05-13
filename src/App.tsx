@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ProductEdit, ProductsList } from './product';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -24,11 +23,9 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import { ProductProvider } from './leaderboard/leaderboardProvider';
 import { AuthProvider, Login, PrivateRoute } from './auth';
-import {search, home, alert} from "ionicons/icons";
-import ProductsSearch from "./pages/ProductsSearch";
+import {home} from "ionicons/icons";
 import ConflictProduct from "./conflict/ConflictProduct";
 import { Home } from './home';
-import Leaderboard from './leaderboard/Leaderboard';
 import LeaderboardList from './leaderboard/LeaderboardList';
 import { Quiz } from './quiz/Quiz';
 

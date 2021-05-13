@@ -1,21 +1,16 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonCol, IonContent, IonGrid, IonRow, IonButton } from '@ionic/react';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonCol, IonContent, IonGrid, IonRow, IonButton, IonItem, IonLabel, IonList, IonListHeader, IonRadio, IonRadioGroup } from '@ionic/react';
 import './style.css'
-
-interface Utils{
-  showing?:boolean;
-  id?:string
-}
-
 
 
 export const Quiz: React.FC<RouteComponentProps> = () => {
 
-  let [state, setState] = useState<Utils>({});
   const [paragrafCurent, setParagrafCurent] = useState(0);
-  const { showing, id } = state;
+  const [intrebareCurenta, setIntrebareCurenta] = useState(0);
+  const [scor, setScor] = useState(0);
+  const [scorIntrebare, setScorIntrebare] = useState(0);
 
   return(
     <IonPage>
@@ -37,7 +32,7 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
                       if(paragrafCurent-1 === -1)
                         return 9
                       else
-                        return paragrafCurent-1%10
+                        return (paragrafCurent-1)%10
                     })}>
                 Inapoi
               </IonButton>
@@ -65,20 +60,143 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
               </IonRow>
             </IonCol>
             <IonCol className="ion-col">
-              <div>
-                <h2>Tabel scor </h2>
-                <IonRow className="header-row">
+              
+                <IonRow id="set-1" className="header-row">
 
-                  <div id="1">
-                    <p>Conform informatiilor precizate anterior, care dintre urmatoarele elemente influenteaza creativitatea la nivel individual?</p>
+                  <IonList style={{display:(intrebareCurenta === 0 ? 'block' : 'none')}}>
+                    <IonRadioGroup>
+                      <IonListHeader>
+                        <IonLabel>
+                        Conform informatiilor precizate anterior, care dintre urmatoarele elemente influenteaza creativitatea la nivel individual?
+                        </IonLabel>
+                      </IonListHeader>
+
+                      <IonItem onClick={ () => setScorIntrebare(10)}>
+                        <IonLabel>a) Discursul inspirational al unui lider</IonLabel>
+                        <IonRadio value="a" />
+                      </IonItem>
+
+                      <IonItem>
+                        <IonLabel >b) Frecventa pauzelor din timpul programului de munca</IonLabel>
+                        <IonRadio value="b" onClick={ () => setScorIntrebare(0)} />
+                      </IonItem>
+
+                      <IonItem>
+                        <IonLabel>c)	Pozitionarea spatiului de lucru</IonLabel>
+                        <IonRadio value="c" onClick={ () => setScorIntrebare(0)} />
+                      </IonItem>
+                    </IonRadioGroup>
+                  </IonList>
+
+
+                  <IonList  id="set-2" style={{display:(intrebareCurenta === 1 ? 'block' : 'none')}}>
+                    <IonRadioGroup>
+                      <IonListHeader>
+                        <IonLabel>
+                          Raportat la trasaturile de personalitate, care dintre urmatoarele reprezinta un stimulent al creativitatii?
+                        </IonLabel>
+                      </IonListHeader>
+
+                      <IonItem>
+                        <IonLabel>a) Constinciozitatea</IonLabel>
+                        <IonRadio value="a" onClick={ () => setScorIntrebare(0)} />
+                      </IonItem>
+
+                      <IonItem>
+                        <IonLabel>b) Asertivitatea</IonLabel>
+                        <IonRadio value="b" onClick={ () => setScorIntrebare(0)} />
+                      </IonItem>
+
+                      <IonItem>
+                        <IonLabel>c) Proactivitatea</IonLabel>
+                        <IonRadio value="c" onClick={ () => setScorIntrebare(10)} />
+                      </IonItem>
+                    </IonRadioGroup>
+                  </IonList>
+
+
+                  <IonList  id="set-3" style={{display:(intrebareCurenta === 2 ? 'block' : 'none')}}>
+                    <IonRadioGroup>
+                      <IonListHeader>
+                        <IonLabel>
+                          Conform studiilor unor autori, nivelul individual de proactivitate poate sa creasca atunci când:
+                        </IonLabel>
+                      </IonListHeader>
+
+                      <IonItem>
+                        <IonLabel>a) Individul se afla într-o stare negativă.</IonLabel>
+                        <IonRadio value="a" onClick={ () => setScorIntrebare(10)} />
+                      </IonItem>
+
+                      <IonItem>
+                        <IonLabel>b) Individul a avut o discuție cu liderul echipei.</IonLabel>
+                        <IonRadio value="b" onClick={ () => setScorIntrebare(0)} />
+                      </IonItem>
+
+                      <IonItem>
+                        <IonLabel>c) Individul este motivat financiar.</IonLabel>
+                        <IonRadio value="c" onClick={ () => setScorIntrebare(0)} />
+                      </IonItem>
+                    </IonRadioGroup>
+                  </IonList>
+                  
+                  <IonList  id="set-4" style={{display:(intrebareCurenta === 3 ? 'block' : 'none')}}>
+                    <IonRadioGroup>
+                      <IonListHeader>
+                        <IonLabel>
+                          Realizările creative complexe sunt rezultatul:
+                        </IonLabel>
+                      </IonListHeader>
+
+                      <IonItem>
+                        <IonLabel>a) Unei singure stari afective.</IonLabel>
+                        <IonRadio value="a" onClick={ () => setScorIntrebare(0)} />
+                      </IonItem>
+
+                      <IonItem>
+                        <IonLabel>b) Unor mai multe stari afective.</IonLabel>
+                        <IonRadio value="b" onClick={ () => setScorIntrebare(10)} />
+                      </IonItem>
+
+                      <IonItem>
+                        <IonLabel>c) Unei stări pozitive.</IonLabel>
+                        <IonRadio value="c" onClick={ () => setScorIntrebare(0)} />
+                      </IonItem>
+                    </IonRadioGroup>
+                  </IonList>
+
+                  <div id="scor" style={{display:(intrebareCurenta === 4 ? 'block' : 'none')}} >
+                    <h1>Scor: {scor} </h1>
                   </div>
 
+                  <IonButton className="ion-button"  size="large" color="primary"onClick={() =>(
 
+                    setScor(scor => {
+                      let scoraux=scorIntrebare
+                      setScorIntrebare(0)
+                      return scor + scorIntrebare
+                    }),
+
+                    setIntrebareCurenta(intrebareCurenta => {
+                      if(intrebareCurenta === 4) {
+                        
+                        return intrebareCurenta
+                      }
+                      return (intrebareCurenta+1)%10
+                    }))}
+                    style={{ display:(intrebareCurenta != 4 ? 'block' : 'none') }}>
+                  next
+                </IonButton>
                 
+                <IonButton className="ion-button"  size="large" color="primary"href="/home"
+                    style={{display:(intrebareCurenta === 4 ? 'block' : 'none')}}>
+                  finish
+                </IonButton>
+
+
                 </IonRow>
 
 
-              </div>
             </IonCol>
           </IonRow>
         </IonGrid>
