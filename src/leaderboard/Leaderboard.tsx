@@ -1,19 +1,26 @@
-import React from 'react';
-import { IonItem, IonLabel, IonRow, IonCol } from '@ionic/react';
-import { LeaderboardProps } from './LeaderboardProps';
 import './style.css'
 
+import { IonCol, IonItem, IonLabel, IonRow } from '@ionic/react'
+
+import { LeaderboardProps } from './leaderBoardProps'
+import React from 'react'
+
 interface LeaderboardPropsPropsExt extends LeaderboardProps {
-    onEdit: (_id?: string) => void;
+  onEdit: (_id?: string) => void
 }
 
-const Leaderboard: React.FC<LeaderboardPropsPropsExt> = ({ _id, username, score, onEdit }) => {
-    return (
-        <IonRow onClick={() => onEdit(_id)}>
-            <IonCol className="leaderboard-user-column">{username}</IonCol>
-            <IonCol className="leaderboard-score-column">{score}</IonCol>
-        </IonRow>
-    );
-};
+const Leaderboard: React.FC<LeaderboardPropsPropsExt> = ({
+  _id,
+  username,
+  score,
+  onEdit,
+}) => {
+  return (
+    <IonRow onClick={() => onEdit(_id)}>
+      <IonCol className='leaderboard-user-column'>{username}</IonCol>
+      <IonCol className='leaderboard-score-column'>{score}</IonCol>
+    </IonRow>
+  )
+}
 
-export default Leaderboard;
+export default Leaderboard
