@@ -5,6 +5,8 @@ import { Redirect } from "react-router-dom"
 import { AuthContext } from "../auth";
 import '../home/style.css';
 
+// TO DO: sa scrie in header Welcome back, {username} 
+
 export const Header:React.FC = () => {
   const { logout } = useContext(AuthContext);
   const username = 'paul';

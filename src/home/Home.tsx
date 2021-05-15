@@ -62,7 +62,7 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
             </IonCol>
             <IonCol className="ion-col">
               <IonRow style={{ display: (showing ? 'block' : 'none') }}>
-                <IonButton href="/quiz" className="ion-button-start-quiz" color="success">
+                <IonButton color="success" shape="round" href="/quiz" className="ion-button-start-quiz">
                   Start Modul
                 </IonButton>
               </IonRow>
@@ -70,10 +70,10 @@ export const Home: React.FC<RouteComponentProps> = ({ history }) => {
                 <h2>Tabel scor {state.numeModul}</h2>
                 <IonRow className="header-row">
                   <IonCol>
-                    <h4>User</h4>
+                    <h2>User</h2>
                   </IonCol>
                   <IonCol>
-                    <h4>Scor</h4>
+                    <h2>Scor</h2>
                   </IonCol>
                 </IonRow>
                 <LeaderboardList idModul={idModul}/>

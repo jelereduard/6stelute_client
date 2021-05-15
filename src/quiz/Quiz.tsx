@@ -5,6 +5,7 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonCol, IonContent, IonGrid, 
 import './style.css'
 import { Header } from '../core/Header';
 
+// Sa se afiseze informatiile corecte in functie de modulul selectat
 
 export const Quiz: React.FC<RouteComponentProps> = () => {
 

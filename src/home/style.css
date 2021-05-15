@@ -3,22 +3,22 @@
   border-right: 1px solid rgb(19, 233, 222);
   text-align: center;
   width: 100%;
-  padding: 0 0 0 5%;
+  padding: 0 0 0 0;
   margin: 30px 0 0 0 ;
-  height: 97%;
+  height: 75%;
   box-sizing: border-box;
 } 
 
 .ion-button {
   width: 100%;
   padding: 0 1%;
-  margin: 30px 0 0 0;
+  margin: 70px 0 0 0;
+  font-size: 1.37rem;
 }
 
 .ion-button-start-quiz {
-  width: 100%;
-  padding: 0 1%;
-  margin: 30px 0 0 0;
+  padding: 0 ;
+  margin: 70px 0 0 0;
   font-size: 1.2rem;
 }
 
@@ -29,7 +29,7 @@
 .ion-col{
   border-left: 1px solid rgb(19, 233, 222);
   box-sizing: border-box;
-  height: 780px;
+  height: 710px;
 }
 
 .header {
