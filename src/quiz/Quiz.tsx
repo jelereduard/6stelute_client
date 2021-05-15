@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonCol, IonContent, IonGrid, IonRow, IonButton, IonItem, IonLabel, IonList, IonListHeader, IonRadio, IonRadioGroup } from '@ionic/react';
 import './style.css'
+import { Header } from '../core/Header';
 
 
 export const Quiz: React.FC<RouteComponentProps> = () => {
@@ -15,11 +16,7 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
   return(
     <IonPage>
       
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle className="title"><h1 className="header-logo">QuizzLearn<i className="fab fa-react"></i></h1></IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header/>
 
       <IonContent className="ion-content">
         <IonGrid className="ion-grid">

@@ -5,6 +5,7 @@ import { IonButton, IonCard, IonContent, IonHeader, IonInput, IonLoading, IonPag
 import { AuthContext } from './AuthProvider';
 import { getLogger } from '../core';
 import './style.css';
+import { Header } from '../core/Header';
 
 
 const log = getLogger('Login');
@@ -14,8 +15,12 @@ interface LoginState {
   password?: string;
 }
 
+export const getUsername = (props:LoginState) => {
+  return props.username
+}
+
 export const Login: React.FC<RouteComponentProps> = ({ history }) => {
-  const { isAuthenticated, isAuthenticating, login, authenticationError, token } = useContext(AuthContext);
+  const { isAuthenticated, isAuthenticating, login, authenticationError, token} = useContext(AuthContext);
   const [state, setState] = useState<LoginState>({});
   const { username, password } = state;
   const handleLogin = () => {
@@ -28,11 +33,7 @@ export const Login: React.FC<RouteComponentProps> = ({ history }) => {
   }
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle className="title"><h1 className="header-logo">QuizzLearn<i className="fab fa-react"></i></h1></IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header/>
       <IonContent className="ion-content">
         <IonCard className="ion-card">
         <IonInput className="textbox-login"     

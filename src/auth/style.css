@@ -32,6 +32,8 @@
     height: 120px;
     width: 100%;
     display: flex;
+    flex: auto;
+    flex-direction: column;
     border-bottom: 1px solid rgba(26, 102, 226, 0.89);
     font-size: 1.2rem
 }
