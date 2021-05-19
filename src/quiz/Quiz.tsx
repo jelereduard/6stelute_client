@@ -19,19 +19,23 @@ import {
 } from '@ionic/react'
 import React, { useContext, useEffect, useState } from 'react'
 
+import { AuthContext } from '../auth'
 import { Header } from '../core/Header'
 import { Plugins } from '@capacitor/core'
 import { ProductContext } from '../leaderboard/leaderboardProvider'
 import { Redirect } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
+import axios from 'axios'
+import { save } from 'ionicons/icons'
 
 // Sa se afiseze informatiile corecte in functie de modulul selectat
 
 const { Storage } = Plugins
 
 export const Quiz: React.FC<RouteComponentProps> = () => {
-  const { products, fetching, fetchingError, connectedNetworkStatus } =
+  const { products, fetching, fetchingError, saveScor, saveProduct } =
     useContext(ProductContext)
+  const { logout, isAuthenticated, token } = useContext(AuthContext)
   const [paragrafCurent, setParagrafCurent] = useState(0)
   const [intrebareCurenta, setIntrebareCurenta] = useState(-1)
   const [scor1, setScor1] = useState(0)
@@ -39,6 +43,15 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
   const [scor3, setScor3] = useState(0)
   const [scorIntrebare, setScorIntrebare] = useState(0)
   const [idModul, setIdModul] = useState(0)
+  const baseUrl = 'localhost:3000'
+  const leaderboardUrl = `http://${baseUrl}/api/item`
+
+  const authConfig = (token?: string) => ({
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  })
 
   useEffect(() => {
     ;(async () => {
@@ -49,6 +62,23 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
       })
     })()
   }, [])
+
+  const finishClicked = (idModul: any, scor1: any) => {
+    ;(async () => {
+      let username = ''
+      await Storage.get({ key: 'username' }).then(e => {
+        if (e.value) {
+          username = JSON.parse(e.value).username
+        }
+      })
+      await axios.post(
+        leaderboardUrl,
+        { modul_id: idModul, scor: scor1, user_id: username },
+        authConfig(token)
+      )
+    })()
+  }
+
   return (
     <IonPage>
       <Header />
@@ -776,11 +806,11 @@ export const Quiz: React.FC<RouteComponentProps> = () => {
                     className='ion-button-quiz'
                     size='large'
                     color='primary'
-                    href='/home'
                     style={{
                       display: intrebareCurenta === 4 ? 'block' : 'none',
-                    }}>
-                    finish
+                    }}
+                    onClick={() => finishClicked(idModul, scor1)}>
+                    finish1
                   </IonButton>
 
                   <IonLabel

@@ -9,6 +9,7 @@ import {
   createLeaderboard as createProduct,
   getLeaderboard as getProducts,
   newWebSocket,
+  saveScorApi,
   syncDataWithServer,
   updateLeaderboard as updateProduct,
 } from './leaderboardApi'
@@ -18,11 +19,13 @@ import { Modul } from './LeaderboardList'
 import { Network } from '@capacitor/core'
 import { LeaderboardProps as ProductProps } from './leaderBoardProps'
 import PropTypes from 'prop-types'
+import { ScorProps } from './leaderBoardProps'
 import { getLogger } from '../core'
 
 const log = getLogger('ProductProvider')
 
 type SaveProductFn = (product: ProductProps) => Promise<any>
+type SaveScorFn = (scor: ScorProps) => Promise<any>
 type FetchLeaderboardFn = (idModul: Modul) => Promise<any>
 
 export interface ProductsState {
@@ -40,6 +43,7 @@ export interface ProductsState {
   setIdModul?: Function
   idModul?: any
   fetchLeaderboard?: Function
+  saveScor?: SaveScorFn
 }
 
 interface ActionProps {
@@ -133,6 +137,8 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({
     fetchModuleCallback,
     [token, idModul]
   )
+
+  const saveScor = useCallback<SaveScorFn>(savescorCallback, [token])
   const value = {
     products,
     fetching,
@@ -147,6 +153,7 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({
     setIdModul,
     fetchLeaderboard,
     idModul,
+    saveScor,
   }
 
   log('returns')
@@ -193,6 +200,15 @@ export const ProductProvider: React.FC<ProductProviderProps> = ({
       type: FETCH_PRODUCTS_SUCCEEDED,
       payload: { fetchedLeaderboard },
     })
+  }
+
+  async function savescorCallback(scorProps: ScorProps) {
+    try {
+      console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+      console.log('save scor')
+      console.log(scorProps)
+      //await saveScorApi(token, scorProps)
+    } catch (error) {}
   }
 
   async function saveProductCallback(product: ProductProps) {
