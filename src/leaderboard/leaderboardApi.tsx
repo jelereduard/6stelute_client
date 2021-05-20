@@ -2,7 +2,6 @@ import { authConfig, baseUrl, getLogger } from '../core'
 
 import { LeaderboardProps } from './leaderBoardProps'
 import { LocalStorage } from '../core/storage'
-import { Token } from 'typescript'
 import axios from 'axios'
 
 const { v4: uuidv4 } = require('uuid')

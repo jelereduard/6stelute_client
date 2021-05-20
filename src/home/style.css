@@ -49,3 +49,8 @@
 .logout {
   margin-right: 30px;
 }
+
+.span-center {
+  display: block;
+  text-align: center;
+}

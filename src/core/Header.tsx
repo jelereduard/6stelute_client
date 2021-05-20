@@ -43,19 +43,26 @@ export const Header: React.FC = () => {
         <IonCol>
           <h1 className='header-logo'>
             {isAuthenticated && <span>Welcome back, {user}!</span>}
+            {!isAuthenticated && <span className="span-center">Welcome!</span>}
           </h1>
         </IonCol>
+        {!isAuthenticated && <IonCol></IonCol>}
 
+        {isAuthenticated && 
         <IonButton className='logout' href='/home'>
           <IonIcon icon={home} />
           Home
         </IonButton>
+        }
 
+        {isAuthenticated && 
         <IonButton className='logout' onClick={handleLogout}>
           <IonIcon icon={logOut} />
           Logout
         </IonButton>
+        }
       </IonRow>
     </IonHeader>
   )
 }
+
